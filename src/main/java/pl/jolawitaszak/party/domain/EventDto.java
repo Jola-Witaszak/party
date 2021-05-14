@@ -14,7 +14,7 @@ public class EventDto {
 
     private Long id;
     private String name;
-    private LocalDate startDate;
+    private LocalDateTime startDate;
     private LocalDate endDate;
-    private LocalDateTime startTime;
+    private String description;
 }

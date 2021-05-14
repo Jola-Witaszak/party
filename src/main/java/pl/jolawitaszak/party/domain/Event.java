@@ -1,5 +1,6 @@
 package pl.jolawitaszak.party.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 @Table(name = "events")
 @NoArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class Event {
 
     @Id
@@ -24,21 +26,29 @@ public class Event {
     private String name;
 
     @NotNull
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
     private LocalDate endDate;
 
-    @NotNull
-    private LocalDateTime startTime;
+    private String description;
 
-    @ManyToMany(mappedBy = "events")
-    private Set<User> participants= new HashSet<>();
+    @ManyToMany(
+            mappedBy = "events",
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+    )
+    private Set<GpsPosition> gpsPositions = new HashSet<>();
 
-    public Event(Long eventId, @NotNull String name, @NotNull LocalDate startDate, LocalDate endDate, @NotNull LocalDateTime startTime) {
+    @ManyToMany(mappedBy = "events",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+            fetch = FetchType.EAGER)
+    private Set<User> users= new HashSet<>();
+
+    public Event(Long eventId, @NotNull String name, @NotNull LocalDateTime startDate, LocalDate endDate, String description) {
         this.eventId = eventId;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.startTime = startTime;
+        this.description = description;
     }
 }

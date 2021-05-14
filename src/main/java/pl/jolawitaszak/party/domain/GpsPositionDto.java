@@ -3,14 +3,15 @@ package pl.jolawitaszak.party.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.geo.Point;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class GpsPositionDto {
 
-    private Long userId;
-    private String username;
-    private String email;
-    private Boolean attendingParty;
+    private Long gpsId;
+    private String placeName;
+    private double x;
+    private double y;
 }
