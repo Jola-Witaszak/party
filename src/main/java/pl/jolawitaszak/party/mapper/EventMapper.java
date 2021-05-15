@@ -15,6 +15,7 @@ public class EventMapper {
                 eventDto.getId(),
                 eventDto.getName(),
                 eventDto.getStartDate(),
+                eventDto.getStartTime(),
                 eventDto.getEndDate(),
                 eventDto.getDescription()
         );
@@ -25,6 +26,7 @@ public class EventMapper {
                 event.getEventId(),
                 event.getName(),
                 event.getStartDate(),
+                event.getStartTime(),
                 event.getEndDate(),
                 event.getDescription()
         );

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.jolawitaszak.party.domain.EventDto;
-import pl.jolawitaszak.party.domain.GpsPosition;
 import pl.jolawitaszak.party.domain.GpsPositionDto;
 import pl.jolawitaszak.party.domain.UserDto;
 import pl.jolawitaszak.party.service.EventNotExistsException;
@@ -58,7 +57,7 @@ public class EventController {
         eventService.removeGuests(eventId, userId);
     }
 
-    @PostMapping(value = "/event/location") // ToDo
+    @PostMapping(value = "/event/location")
     public Set<GpsPositionDto> addLocations(@RequestParam long eventId, @RequestParam long gpsPositionId) throws EventNotExistsException, GpsPositionNotFoundException {
         return eventService.addGpsPosition(eventId, gpsPositionId);
     }

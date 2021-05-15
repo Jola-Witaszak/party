@@ -2,7 +2,6 @@ package pl.jolawitaszak.party.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.events.EventException;
 import pl.jolawitaszak.party.domain.*;
 import pl.jolawitaszak.party.mapper.EventMapper;
 import pl.jolawitaszak.party.mapper.GpsPositionMapper;
@@ -11,6 +10,7 @@ import pl.jolawitaszak.party.repository.EventRepository;
 import pl.jolawitaszak.party.repository.GpsPositionRepository;
 import pl.jolawitaszak.party.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -52,7 +52,8 @@ public class EventService {
     }
 
     public EventDto getEvent(final long eventId) throws EventNotExistsException {
-        Event findEvent = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException("Event with id " + eventId + " not exists"));
+        Event findEvent = eventRepository.findById(eventId).orElseThrow(
+                () -> new EventNotExistsException("Event with id " + eventId + " not exists"));
         return eventMapper.mapToEventDto(findEvent);
     }
 
@@ -61,37 +62,56 @@ public class EventService {
         return eventMapper.mapToEventsDtoList(events);
     }
 
+    @Transactional
     public Set<UserDto> inviteGuests(long eventId, long userId) throws UserNotExistsException, EventNotExistsException {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotExistsException("User with id " + userId + " not exists"));
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException("Event with id " + eventId + " not exists"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotExistsException(
+                "User with id " + userId + " not exists"));
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException(
+                "Event with id " + eventId + " not exists"));
         event.getUsers().add(user);
         user.getEvents().add(event);
-        eventRepository.save(event);
-        Set<User> guests = event.getUsers();
+
+        userRepository.save(user);
+        Event eventWithAddedGuest = eventRepository.save(event);
+        Set<User> guests = eventWithAddedGuest.getUsers();
         return userMapper.mapToUsersDtoSet(guests);
     }
 
+    @Transactional
     public void removeGuests(long eventId, long userId) throws UserNotExistsException, EventNotExistsException {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotExistsException("User with id " + userId + " not exists"));
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException("Event with id " + eventId + " not exists"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotExistsException(
+                "User with id " + userId + " not exists"));
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException(
+                "Event with id " + eventId + " not exists"));
         event.getUsers().remove(user);
         user.getEvents().remove(event);
+        userRepository.save(user);
         eventRepository.save(event);
     }
 
+    @Transactional
     public Set<GpsPositionDto> addGpsPosition(long eventId, long gpsPositionId) throws EventNotExistsException, GpsPositionNotFoundException {
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException("Event with id " + eventId + " not exists"));
-        GpsPosition gpsPosition = gpsPositionRepository.findById(gpsPositionId).orElseThrow(() -> new GpsPositionNotFoundException("GPS position with id " + gpsPositionId + " not exists"));
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException(
+                "Event with id " + eventId + " not exists"));
+        GpsPosition gpsPosition = gpsPositionRepository.findById(gpsPositionId).orElseThrow(
+                () -> new GpsPositionNotFoundException("GPS position with id " + gpsPositionId + " not exists"));
         event.getGpsPositions().add(gpsPosition);
         gpsPosition.getEvents().add(event);
-        Set<GpsPosition> locations = event.getGpsPositions();
-        return gpsPositionMapper.mapToGpsSignalsDtoSet(locations);
+
+        gpsPositionRepository.save(gpsPosition);
+        Event savedEvent = eventRepository.save(event);
+        Set<GpsPosition> locations = savedEvent.getGpsPositions();
+        return gpsPositionMapper.mapToGpsPositionsDtoSet(locations);
     }
 
+    @Transactional
     public void removeGpsPosition(long eventId, long gpsPositionId) throws EventNotExistsException, GpsPositionNotFoundException {
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException("Event with id " + eventId + " not exists"));
-        GpsPosition gpsPosition = gpsPositionRepository.findById(gpsPositionId).orElseThrow(() -> new GpsPositionNotFoundException("GPS position with id " + gpsPositionId + " not exists"));
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException(
+                "Event with id " + eventId + " not exists"));
+        GpsPosition gpsPosition = gpsPositionRepository.findById(gpsPositionId).orElseThrow(
+                () -> new GpsPositionNotFoundException("GPS position with id " + gpsPositionId + " not exists"));
         event.getGpsPositions().remove(gpsPosition);
         gpsPosition.getEvents().remove(event);
+        eventRepository.save(event);
     }
 }

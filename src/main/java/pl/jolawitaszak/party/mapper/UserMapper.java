@@ -38,4 +38,10 @@ public class UserMapper {
                 .map(this::mapToUserDto)
                 .collect(Collectors.toSet());
     }
+
+    public List<User> mapTuUsersList(List<UserDto> usersDto) {
+        return usersDto.stream()
+                .map(this::mapToUser)
+                .collect(Collectors.toList());
+    }
 }

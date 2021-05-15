@@ -2,7 +2,6 @@ package pl.jolawitaszak.party.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.jolawitaszak.party.domain.Event;
 import pl.jolawitaszak.party.domain.GpsPosition;
 import pl.jolawitaszak.party.domain.GpsPositionDto;
 import pl.jolawitaszak.party.mapper.GpsPositionMapper;
@@ -36,17 +35,19 @@ public class GpsPositionService {
     }
 
     public void removePosition(final long gpsSignalId) throws GpsPositionNotFoundException {
-        GpsPosition findGpsPosition = positionRepository.findById(gpsSignalId).orElseThrow(() -> new GpsPositionNotFoundException("GpsSignal with id " + gpsSignalId + " not exists"));
+        GpsPosition findGpsPosition = positionRepository.findById(gpsSignalId)
+                .orElseThrow(() -> new GpsPositionNotFoundException("GpsSignal with id " + gpsSignalId + " not exists"));
         positionRepository.deleteById(findGpsPosition.getGpsId());
     }
 
     public List<GpsPositionDto> getAllGpsPositions() {
         List<GpsPosition> gpsPositions = positionRepository.findAll();
-        return positionMapper.mapToGpsSignalsDtoList(gpsPositions);
+        return positionMapper.mapToGpsPositionsDtoList(gpsPositions);
     }
 
     public GpsPositionDto getGpsPosition(final long gpsSignalId) throws GpsPositionNotFoundException {
-        GpsPosition findPosition = positionRepository.findById(gpsSignalId).orElseThrow(() -> new GpsPositionNotFoundException("GpsPosition with id " + gpsSignalId + " not exists"));
+        GpsPosition findPosition = positionRepository.findById(gpsSignalId)
+                .orElseThrow(() -> new GpsPositionNotFoundException("GpsPosition with id " + gpsSignalId + " not exists"));
         return positionMapper.mapToGpsPositionDto(findPosition);
     }
 }

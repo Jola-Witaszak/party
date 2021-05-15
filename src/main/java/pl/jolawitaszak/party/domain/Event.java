@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +26,10 @@ public class Event {
     private String name;
 
     @NotNull
-    private LocalDateTime startDate;
+    private LocalDate startDate;
+
+    @NotNull
+    private LocalTime startTime;
 
     private LocalDate endDate;
 
@@ -39,15 +42,18 @@ public class Event {
     )
     private Set<GpsPosition> gpsPositions = new HashSet<>();
 
-    @ManyToMany(mappedBy = "events",
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
-            fetch = FetchType.EAGER)
+    @ManyToMany(
+            mappedBy = "events",
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+           )
     private Set<User> users= new HashSet<>();
 
-    public Event(Long eventId, @NotNull String name, @NotNull LocalDateTime startDate, LocalDate endDate, String description) {
+    public Event(Long eventId, @NotNull String name, @NotNull LocalDate startDate, @NotNull LocalTime startTime, LocalDate endDate, String description) {
         this.eventId = eventId;
         this.name = name;
         this.startDate = startDate;
+        this.startTime = startTime;
         this.endDate = endDate;
         this.description = description;
     }

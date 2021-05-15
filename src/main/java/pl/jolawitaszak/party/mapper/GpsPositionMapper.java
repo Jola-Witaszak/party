@@ -29,13 +29,13 @@ public class GpsPositionMapper {
         );
     }
 
-    public Set<GpsPositionDto> mapToGpsSignalsDtoSet(Set<GpsPosition> gpsPositions) {
+    public Set<GpsPositionDto> mapToGpsPositionsDtoSet(Set<GpsPosition> gpsPositions) {
         return gpsPositions.stream()
                 .map(this::mapToGpsPositionDto)
                 .collect(Collectors.toSet());
     }
 
-    public List<GpsPositionDto> mapToGpsSignalsDtoList(List<GpsPosition> gpsPositions) {
+    public List<GpsPositionDto> mapToGpsPositionsDtoList(List<GpsPosition> gpsPositions) {
         return gpsPositions.stream()
                 .map(this::mapToGpsPositionDto)
                 .collect(Collectors.toList());

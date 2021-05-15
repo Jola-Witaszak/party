@@ -2,7 +2,6 @@ package pl.jolawitaszak.party.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.geo.Point;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

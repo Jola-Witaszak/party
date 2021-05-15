@@ -3,7 +3,6 @@ package pl.jolawitaszak.party.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.geo.Point;
 
 @Getter
 @NoArgsConstructor
