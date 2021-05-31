@@ -18,33 +18,38 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserDto create(@RequestBody UserDto userDto) {
         return userService.addUser(userDto);
     }
 
-    @PutMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserDto update(@RequestBody UserDto userDto) throws UserNotExistsException {
         return userService.update(userDto);
     }
 
-    @DeleteMapping(value = "/user/{id}")
+    @DeleteMapping(value = "/users/{id}")
     public void delete(@PathVariable long id) throws UserNotExistsException {
         userService.remove(id);
     }
 
-    @GetMapping(value = "/user/{id}")
+    @GetMapping(value = "/users/{id}")
     public UserDto get(@PathVariable long id) throws UserNotExistsException {
         return userService.getUser(id);
     }
 
-    @GetMapping(value = "/user")
+    @GetMapping(value = "/users")
     public List<UserDto> getAll() {
         return userService.getAll();
     }
 
-    @PutMapping(value = "/user/confirm") //
+    @PutMapping(value = "/users/confirm") //
     public void confirm(@RequestParam long userId, long eventId) throws UserNotExistsException, EventNotExistsException {
         userService.confirmParticipation(userId, eventId);
+    }
+
+    @GetMapping(value = "/users/search/{stringFilter}")
+    public List<UserDto> search(@PathVariable String stringFilter) {
+        return userService.findAll(stringFilter);
     }
 }

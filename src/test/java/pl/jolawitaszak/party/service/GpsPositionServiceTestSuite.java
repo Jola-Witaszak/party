@@ -8,8 +8,6 @@ import pl.jolawitaszak.party.domain.GpsPositionDto;
 import pl.jolawitaszak.party.mapper.GpsPositionMapper;
 import pl.jolawitaszak.party.repository.GpsPositionRepository;
 
-import javax.persistence.SecondaryTable;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -47,7 +47,7 @@ class EventServiceTestSuite {
         EventDto eventDto = eventMapper.mapToEventDto(event);
         //When
         EventDto addedEvent = eventService.addEvent(eventDto);
-        long id = addedEvent.getId();
+        long id = addedEvent.getEventId();
         //Then
         Optional<Event> createdEvent = eventRepository.findById(id);
         assertNotEquals(0, id);
@@ -208,7 +208,7 @@ class EventServiceTestSuite {
         //Given
         Event event = new Event(null, "Baby Shower", LocalDate.now(), LocalTime.now(), null,
                 "The best party!");
-        User user = new User(null, "Marcus", "marcus@mail.pl", null);
+        User user = new User(null, "Marcus", "marcus@mail.pl", null, 123);
 
         Event savedEvent = eventRepository.save(event);
         User savedUser = userRepository.save(user);
@@ -248,8 +248,8 @@ class EventServiceTestSuite {
     @Test
     void shouldThrowExceptionWhenRemoveUserWithIncorrectId() {
         //Given
-        User user = new User(null, "Daria", "daria@mail.pl", null);
-        User user2 = new User(null, "Tom", "tom@mail.pl", null);
+        User user = new User(null, "Daria", "daria@mail.pl", null, 123);
+        User user2 = new User(null, "Tom", "tom@mail.pl", null, 456);
         Event event = new Event(null, "Garden Party", LocalDate.now(), LocalTime.now(), null,
                 "summer party with friends");
         User savedUser = userRepository.save(user);
@@ -274,7 +274,7 @@ class EventServiceTestSuite {
         //Given
         Event event = new Event(null, "Baby Shower", LocalDate.now(), LocalTime.now(), null,
                 "The best party!");
-        User user = new User(null, "Marcus", "marcus@mail.pl", null);
+        User user = new User(null, "Marcus", "marcus@mail.pl", null, 123);
 
         Event savedEvent = eventRepository.save(event);
         User savedUser = userRepository.save(user);

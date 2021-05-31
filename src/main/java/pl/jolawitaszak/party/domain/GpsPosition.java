@@ -1,6 +1,6 @@
 package pl.jolawitaszak.party.domain;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "targets")
 @NoArgsConstructor
-@Getter
+@Data
 public class GpsPosition {
 
     @Id

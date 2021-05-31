@@ -22,47 +22,47 @@ public class EventController {
 
     private final EventService eventService;
 
-    @PostMapping(value = "/event", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/events", consumes = MediaType.APPLICATION_JSON_VALUE)
     public EventDto add(@RequestBody EventDto eventDto) {
         return eventService.addEvent(eventDto);
     }
 
-    @PutMapping(value = "/event", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/events", consumes = MediaType.APPLICATION_JSON_VALUE)
     public EventDto update(@RequestBody EventDto eventDto) throws EventNotExistsException {
         return eventService.updateEvent(eventDto);
     }
 
-    @DeleteMapping(value = "/event/{eventId}")
+    @DeleteMapping(value = "/events/{eventId}")
     public void delete(@PathVariable long eventId) throws EventNotExistsException {
         eventService.removeEvent(eventId);
     }
 
-    @GetMapping(value = "/event/{eventId}")
+    @GetMapping(value = "/events/{eventId}")
     public EventDto get(@PathVariable long eventId) throws EventNotExistsException {
         return eventService.getEvent(eventId);
     }
 
-    @GetMapping(value = "/event")
+    @GetMapping(value = "/events")
     public List<EventDto> getAll() {
         return eventService.getAll();
     }
 
-    @PostMapping (value = "/event/guests")
+    @PostMapping (value = "/events/guests")
     public Set<UserDto> addGuest(@RequestParam long eventId, long userId) throws UserNotExistsException, EventNotExistsException {
         return eventService.inviteGuests(eventId, userId);
     }
 
-    @DeleteMapping(value = "/event/guests/{eventId}/{userId}")
+    @DeleteMapping(value = "/events/guests/{eventId}/{userId}")
     public void removeGuest(@PathVariable long eventId, @PathVariable long userId) throws UserNotExistsException, EventNotExistsException {
         eventService.removeGuests(eventId, userId);
     }
 
-    @PostMapping(value = "/event/location")
+    @PostMapping(value = "/events/location")
     public Set<GpsPositionDto> addLocations(@RequestParam long eventId, @RequestParam long gpsPositionId) throws EventNotExistsException, GpsPositionNotFoundException {
         return eventService.addGpsPosition(eventId, gpsPositionId);
     }
 
-    @DeleteMapping(value = "/event/location/{eventId}/{gpsPositionId}") //ToDo
+    @DeleteMapping(value = "/events/location/{eventId}/{gpsPositionId}")
     public void removeLocation(@PathVariable long eventId, @PathVariable long gpsPositionId) throws EventNotExistsException, GpsPositionNotFoundException {
         eventService.removeGpsPosition(eventId, gpsPositionId);
     }

@@ -12,7 +12,7 @@ public class EventMapper {
 
     public Event mapToEvent(final EventDto eventDto) {
         return new Event(
-                eventDto.getId(),
+                eventDto.getEventId(),
                 eventDto.getName(),
                 eventDto.getStartDate(),
                 eventDto.getStartTime(),

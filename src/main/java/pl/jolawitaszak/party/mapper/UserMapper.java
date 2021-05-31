@@ -16,7 +16,8 @@ public class UserMapper {
                 userDto.getUserId(),
                 userDto.getUsername(),
                 userDto.getEmail(),
-                userDto.getAttendingParty());
+                userDto.getAttendingParty(),
+                userDto.getPhoneNumber());
     }
 
     public UserDto mapToUserDto(final User user) {
@@ -24,7 +25,8 @@ public class UserMapper {
                 user.getUserId(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getAttendingParty());
+                user.getAttendingParty(),
+                user.getPhoneNumber());
     }
 
     public List<UserDto> mapToUsersDtoList(List<User> users){

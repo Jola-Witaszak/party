@@ -1,7 +1,6 @@
 package pl.jolawitaszak.party.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,8 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "events")
 @NoArgsConstructor
-@Getter
-@EqualsAndHashCode
+@Data
 public class Event {
 
     @Id

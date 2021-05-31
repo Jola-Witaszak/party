@@ -1,6 +1,6 @@
 package pl.jolawitaszak.party.service;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.jolawitaszak.party.domain.Event;
 import pl.jolawitaszak.party.domain.User;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserService {
 
     private final UserMapper userMapper;
@@ -57,5 +57,21 @@ public class UserService {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException("Event with id " + eventId + " not exists"));
         user.setAttendingParty(true);
         userRepository.save(user);
+    }
+
+    public void doesNotParticipateInTheEvent(long userId, long eventId) throws UserNotExistsException, EventNotExistsException {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotExistsException("User with id " + userId + " not exists"));
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotExistsException("Event with id " + eventId + " not exists"));
+        user.setAttendingParty(false);
+        userRepository.save(user);
+    }
+
+    public List<UserDto> findAll(String stringFilter) {
+        if (stringFilter == null || stringFilter.isEmpty()) {
+            return getAll();
+        } else {
+            List<User> filteredUsers =  userRepository.search(stringFilter);
+            return userMapper.mapToUsersDtoList(filteredUsers);
+        }
     }
 }

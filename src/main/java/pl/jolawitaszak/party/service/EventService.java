@@ -20,11 +20,12 @@ import java.util.Set;
 public class EventService {
 
     private final EventRepository eventRepository;
-    private final UserRepository userRepository;
-    private final GpsPositionRepository gpsPositionRepository;
     private final EventMapper eventMapper;
-    private final UserMapper userMapper;
+    private final GpsPositionRepository gpsPositionRepository;
     private final GpsPositionMapper gpsPositionMapper;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
 
     public EventDto addEvent(final EventDto eventDto) {
         Event eventToAdd = eventMapper.mapToEvent(eventDto);
@@ -33,13 +34,13 @@ public class EventService {
     }
 
     public EventDto updateEvent(final EventDto eventDto) throws EventNotExistsException {
-        Optional<Event> findEvent = eventRepository.findById(eventDto.getId());
+        Optional<Event> findEvent = eventRepository.findById(eventDto.getEventId());
         if (findEvent.isPresent()) {
             Event eventToUpdate = eventMapper.mapToEvent(eventDto);
             Event updatedEvent = eventRepository.save(eventToUpdate);
             return eventMapper.mapToEventDto(updatedEvent);
         } else {
-            throw new EventNotExistsException("Event with id " + eventDto.getId() + " not exists");
+            throw new EventNotExistsException("Event with id " + eventDto.getEventId() + " not exists");
         }
     }
 

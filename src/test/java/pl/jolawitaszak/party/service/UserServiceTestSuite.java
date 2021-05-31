@@ -13,8 +13,6 @@ import pl.jolawitaszak.party.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,9 +32,9 @@ class UserServiceTestSuite {
     EventRepository eventRepository;
 
     @Test
-    void shouldAddUserToDatabase() {
+    void shouldCreateUser() {
         //Given
-        User user = new User(null, "Monica", "moni@mail.pl", null);
+        User user = new User(null, "Monica", "moni@mail.pl", null, 123456);
         UserDto userDto = userMapper.mapToUserDto(user);
         //When
         UserDto savedUser = userService.addUser(userDto);
@@ -53,12 +51,11 @@ class UserServiceTestSuite {
     @Test
     void shouldUpdateUser() throws UserNotExistsException {
         //Given
-        User user = new User(null, "Monica", "moni@mail.pl", null);
+        User user = new User(null, "Monica", "moni@mail.pl", null, 123);
         User savedUser = userRepository.save(user);
         long userId = savedUser.getUserId();
 
-        User userToUpdate = new User(userId, "Monica", "moni@mail.pl", true);
-        UserDto userToUpdateDto = userMapper.mapToUserDto(userToUpdate);
+        UserDto userToUpdateDto = new UserDto(userId, "Monica", "moni@mail.pl", true, 123);
 
         //When
         UserDto updatedUserDto = userService.update(userToUpdateDto);
@@ -75,25 +72,25 @@ class UserServiceTestSuite {
     @Test
     void shouldThrowExceptionWhenUpdateUserWithIncorrectId() {
         //Given
-        User user = new User(null, "Monica", "moni@mail.pl", null);
+        User user = new User(null, "Monica", "moni@mail.pl", null, 123);
         User savedUser = userRepository.save(user);
         long userId = savedUser.getUserId();
 
-        User userToUpdate = new User(userId, "Monica", "moni@mail.pl", true);
-        UserDto userToUpdateDto = userMapper.mapToUserDto(userToUpdate);
-        User testUser = userMapper.mapToUser(userToUpdateDto);
-        userRepository.deleteById(testUser.getUserId());
+        UserDto userToUpdateDto = new UserDto(0L, "Monica", "moni@mail.pl", true, 123);
 
         //When
         //Then
         assertThrows(UserNotExistsException.class, () -> userService.update(userToUpdateDto));
+
+        //CleanUp
+        userRepository.deleteById(userId);
     }
 
     @Test
     void shouldRemoveUser() throws UserNotExistsException {
         //Given
-        User user = new User(null, "Monica", "moni@mail.pl", null);
-        User user2 = new User(null, "Alice", "ala@mail.pl", null);
+        User user = new User(null, "Monica", "moni@mail.pl", null, 123);
+        User user2 = new User(null, "Alice", "ala@mail.pl", null, 456);
         User savedUser2 = userRepository.save(user2);
         User savedUser = userRepository.save(user);
         long userId = savedUser.getUserId();
@@ -116,7 +113,7 @@ class UserServiceTestSuite {
     @Test
     void shouldThrowExceptionWhenDeleteUserWithIncorrectId() {
         //Given
-        User user = new User(null, "Monica", "moni@mail.pl", null);
+        User user = new User(null, "Monica", "moni@mail.pl", null, 123);
         User savedUser = userRepository.save(user);
         long userId = savedUser.getUserId();
         userRepository.deleteById(userId);
@@ -128,7 +125,7 @@ class UserServiceTestSuite {
     @Test
     void shouldFetchOneUser() throws UserNotExistsException {
         //Given
-        User user = new User(null, "Monica", "moni@mail.pl", null);
+        User user = new User(null, "Monica", "moni@mail.pl", null, 1234);
         User savedUser = userRepository.save(user);
         long userId = savedUser.getUserId();
         int usersSize = userRepository.findAll().size();
@@ -149,8 +146,8 @@ class UserServiceTestSuite {
     @Test
     void shouldThrowExceptionWhenGetUserWithIncorrectId() {
         //Given
-        User user = new User(null, "Monica", "moni@mail.pl", null);
-        User user2 = new User(null, "Alice", "ala@mail.pl", null);
+        User user = new User(null, "Monica", "moni@mail.pl", null, 123);
+        User user2 = new User(null, "Alice", "ala@mail.pl", null, 456);
         User savedUser2 = userRepository.save(user2);
         User savedUser = userRepository.save(user);
         long userId = savedUser.getUserId();
@@ -168,8 +165,8 @@ class UserServiceTestSuite {
     @Test
     void shouldFetchAllUsers() {
         //Given
-        User user = new User(null, "Monica", "moni@mail.pl", null);
-        User user2 = new User(null, "Alice", "ala@mail.pl", null);
+        User user = new User(null, "Monica", "moni@mail.pl", null, 123);
+        User user2 = new User(null, "Alice", "ala@mail.pl", null, 456);
         User savedUser2 = userRepository.save(user2);
         User savedUser = userRepository.save(user);
         long userId = savedUser.getUserId();
@@ -203,7 +200,7 @@ class UserServiceTestSuite {
         //Given
         Event event = new Event(null, "Test name", LocalDate.now(), LocalTime.now(),
                 LocalDate.now().plusDays(1), "description");
-        User user = new User(null, "Alan", "alan@mail.pl",null);
+        User user = new User(null, "Alan", "alan@mail.pl",null, 1234);
 
         Event savedEvent = eventRepository.save(event);
         long eventId = savedEvent.getEventId();

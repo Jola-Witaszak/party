@@ -29,16 +29,19 @@ public class User {
 
     private Boolean attendingParty;
 
+    private int phoneNumber;
+
     @ManyToMany
     @JoinTable(name = "events_users",
                joinColumns = {@JoinColumn(name = "event_id")},
                inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private List<Event> events = new ArrayList<>();
 
-    public User(Long userId, @NotNull String username, @NotNull String email, Boolean attendingParty) {
+    public User(Long userId, @NotNull String username, @NotNull String email, Boolean attendingParty, int phoneNumber) {
         this.userId = userId;
         this.username = username;
         this.email = email;
         this.attendingParty = attendingParty;
+        this.phoneNumber = phoneNumber;
     }
 }
