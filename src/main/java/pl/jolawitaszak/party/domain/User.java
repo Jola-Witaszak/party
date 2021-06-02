@@ -1,17 +1,21 @@
 package pl.jolawitaszak.party.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
 @Getter
+@Setter
+@EqualsAndHashCode
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,17 +27,21 @@ public class User {
     @NotNull
     private String email;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(
-            name = "users_events",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "eventId")
-    )
-    private Set<Event> events = new HashSet<>();
+    private Boolean attendingParty;
 
-    public User(Long userId, @NotNull String username, @NotNull String email) {
+    private int phoneNumber;
+
+    @ManyToMany
+    @JoinTable(name = "events_users",
+               joinColumns = {@JoinColumn(name = "event_id")},
+               inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<Event> events = new ArrayList<>();
+
+    public User(Long userId, @NotNull String username, @NotNull String email, Boolean attendingParty, int phoneNumber) {
         this.userId = userId;
         this.username = username;
         this.email = email;
+        this.attendingParty = attendingParty;
+        this.phoneNumber = phoneNumber;
     }
 }

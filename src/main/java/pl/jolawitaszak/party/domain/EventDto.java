@@ -1,20 +1,22 @@
 package pl.jolawitaszak.party.domain;
 
+
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class EventDto {
 
-    private Long id;
+    private Long eventId;
     private String name;
     private LocalDate startDate;
+    private LocalTime startTime;
     private LocalDate endDate;
-    private LocalDateTime startTime;
+    private String description;
 }

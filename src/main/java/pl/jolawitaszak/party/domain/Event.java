@@ -1,19 +1,19 @@
 package pl.jolawitaszak.party.domain;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "events")
 @NoArgsConstructor
-@Getter
+@Data
 public class Event {
 
     @Id
@@ -26,19 +26,33 @@ public class Event {
     @NotNull
     private LocalDate startDate;
 
+    @NotNull
+    private LocalTime startTime;
+
     private LocalDate endDate;
 
-    @NotNull
-    private LocalDateTime startTime;
+    private String description;
 
-    @ManyToMany(mappedBy = "events")
-    private Set<User> participants= new HashSet<>();
+    @ManyToMany(
+            mappedBy = "events",
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+    )
+    private Set<GpsPosition> gpsPositions = new HashSet<>();
 
-    public Event(Long eventId, @NotNull String name, @NotNull LocalDate startDate, LocalDate endDate, @NotNull LocalDateTime startTime) {
+    @ManyToMany(
+            mappedBy = "events",
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+           )
+    private Set<User> users= new HashSet<>();
+
+    public Event(Long eventId, @NotNull String name, @NotNull LocalDate startDate, @NotNull LocalTime startTime, LocalDate endDate, String description) {
         this.eventId = eventId;
         this.name = name;
         this.startDate = startDate;
-        this.endDate = endDate;
         this.startTime = startTime;
+        this.endDate = endDate;
+        this.description = description;
     }
 }
