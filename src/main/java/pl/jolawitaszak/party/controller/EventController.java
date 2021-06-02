@@ -47,6 +47,11 @@ public class EventController {
         return eventService.getAll();
     }
 
+    @GetMapping(value = "/events/{searchTerm}")
+    public List<EventDto> getAll(@PathVariable String searchTerm) {
+        return eventService.findAll(searchTerm);
+    }
+
     @PostMapping (value = "/events/guests")
     public Set<UserDto> addGuest(@RequestParam long eventId, long userId) throws UserNotExistsException, EventNotExistsException {
         return eventService.inviteGuests(eventId, userId);

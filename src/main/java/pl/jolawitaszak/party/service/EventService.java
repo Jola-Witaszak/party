@@ -115,4 +115,13 @@ public class EventService {
         gpsPosition.getEvents().remove(event);
         eventRepository.save(event);
     }
+
+    public List<EventDto> findAll(String stringFilter) {
+        if (stringFilter == null || stringFilter.isEmpty()) {
+            return getAll();
+        } else {
+            List<Event> filteredEvent =  eventRepository.search(stringFilter);
+            return eventMapper.mapToEventsDtoList(filteredEvent);
+        }
+    }
 }
