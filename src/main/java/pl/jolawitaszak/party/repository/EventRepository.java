@@ -5,7 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.jolawitaszak.party.domain.Event;
-import pl.jolawitaszak.party.domain.User;
 
 import javax.transaction.Transactional;
 import java.util.List;

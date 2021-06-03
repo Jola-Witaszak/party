@@ -22,13 +22,15 @@ public class MailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public void send(Mail mail) {
+    public String send(Mail mail) {
         log.info("Starting email preparation...");
         try {
             javaMailSender.send(createMimeMessage(mail));
             log.info("Email has been sent!");
+            return "Email has been sent!";
         } catch (MailException e) {
             log.error("Failed to process email sending..." + e.getMessage());
+            return "Failed to process email sending...";
         }
     }
 
