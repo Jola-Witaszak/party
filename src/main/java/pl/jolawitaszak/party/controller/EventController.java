@@ -47,7 +47,7 @@ public class EventController {
         return eventService.getAll();
     }
 
-    @GetMapping(value = "/events/{searchTerm}")
+    @GetMapping(value = "/events/search/{searchTerm}")
     public List<EventDto> getAll(@PathVariable String searchTerm) {
         return eventService.findAll(searchTerm);
     }

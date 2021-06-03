@@ -53,16 +53,16 @@ class EventControllerTest {
     @Test
     void shouldFetchOneEvent() throws Exception {
         //Given
-        EventDto eventDto = new EventDto(1L, "Party", LocalDate.of(2021, 5, 30),
+        EventDto eventDto = new EventDto(3L, "Party", LocalDate.of(2021, 5, 30),
                 LocalTime.of(18,30), LocalDate.of(2021, 5, 31), "description");
 
-        when(eventService.getEvent(1)).thenReturn(eventDto);
+        when(eventService.getEvent(3)).thenReturn(eventDto);
 
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/events/1"))
+                .get("/v1/events/3"))
                 .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.eventId", Matchers.is(1)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.eventId", Matchers.is(3)));
     }
 
     @Test
