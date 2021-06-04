@@ -3,3 +3,5 @@ https://github.com/Jola-Witaszak/party-planner/tree/master/src/main/java/com/wit
 
 # uruchomienie aplikacji - lokalnie 
 http://localhost:8080/
+
+# aplikacja docelowo ma służyć planowaniu wspólnych imprez i wyjazdów rodzinnych, na razie w budowie :)
