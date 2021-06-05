@@ -17,6 +17,7 @@ import java.util.List;
 public class EmailScheduler {
 
     private static final String SUBJECT = "Party next week!";
+    private static final String REMINDER_MESSAGE = "Please confirm your participation in the event" ;
 
     private final EventService eventService;
     private final EventMapper eventMapper;
@@ -24,8 +25,6 @@ public class EmailScheduler {
 
     @Scheduled(cron = "0 0 8 * * *")
     public void sendReminderEmail() {
-
-        String reminderMessage = "Please confirm your participation in the event" ;
 
         List<Event> events = eventMapper.mapToEventsList(eventService.getAll());
 
@@ -37,7 +36,7 @@ public class EmailScheduler {
                     mailService.send(Mail.builder()
                             .mailTo(user.getEmail())
                             .subject(SUBJECT)
-                            .message(reminderMessage)
+                            .message(REMINDER_MESSAGE)
                             .build()
                     );
                 });
