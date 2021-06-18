@@ -56,7 +56,7 @@ class EventControllerTest {
         EventDto eventDto = new EventDto(3L, "Party", LocalDate.of(2021, 5, 30),
                 LocalTime.of(18,30), LocalDate.of(2021, 5, 31), "description");
 
-        when(eventService.getEvent(3)).thenReturn(eventDto);
+        when(eventService.getEvent(3 )).thenReturn(eventDto);
 
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders

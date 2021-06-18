@@ -26,6 +26,17 @@ public class MailCreatorService {
         context.setVariable("welcome_message", adminConfig.getWelcomeMessage());
         context.setVariable("goodbye_message", adminConfig.getGoodbyeMessage());
 
-        return templateEngine.process("/mail/welcome-email", context);
+        return templateEngine.process("/mail/hello", context);
+    }
+
+    public String buildInvitationEmail(String message) {
+        Context context = new Context();
+        context.setVariable("message", message);
+        context.setVariable("app_url", "http://localhost:8080");
+        context.setVariable("welcome_message", adminConfig.getWelcomeMessage());
+        context.setVariable("goodbye_message", adminConfig.getGoodbyeMessage());
+        context.setVariable("button", "Party Fun & Spontan");
+
+        return templateEngine.process("/mail/invitation-email", context);
     }
 }
