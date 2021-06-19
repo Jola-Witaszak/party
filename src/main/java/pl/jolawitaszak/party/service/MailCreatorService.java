@@ -21,7 +21,7 @@ public class MailCreatorService {
         Context context = new Context();
         context.setVariable("adminConfig", adminConfig);
         context.setVariable("message", message);
-        context.setVariable("app_url", "http://localhost:8080");
+        context.setVariable("app_url", "https://vast-peak-92879.herokuapp.com/");
         context.setVariable("button", "Party Fun & Spontan");
         context.setVariable("welcome_message", adminConfig.getWelcomeMessage());
         context.setVariable("goodbye_message", adminConfig.getGoodbyeMessage());
@@ -32,7 +32,7 @@ public class MailCreatorService {
     public String buildInvitationEmail(String message) {
         Context context = new Context();
         context.setVariable("message", message);
-        context.setVariable("app_url", "http://localhost:8080");
+        context.setVariable("app_url", "https://vast-peak-92879.herokuapp.com/");
         context.setVariable("welcome_message", adminConfig.getWelcomeMessage());
         context.setVariable("goodbye_message", adminConfig.getGoodbyeMessage());
         context.setVariable("button", "Party Fun & Spontan");
