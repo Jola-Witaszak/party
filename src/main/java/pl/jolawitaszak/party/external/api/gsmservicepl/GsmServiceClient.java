@@ -18,15 +18,15 @@ public class GsmServiceClient {
     private static final String PASSWORD = "DRRT8QvBXbt8eQV";
 
     private final RestTemplate restTemplate;
-    private Sms sms;
+
 
     public SmsSendResponseDto send (Sms sms) {
 
-        URI url = getUri();
+        URI url = getUri(sms);
         return restTemplate.postForObject(url,null, SmsSendResponseDto.class);
     }
 
-    private URI getUri() {
+    private URI getUri(Sms sms) {
         return UriComponentsBuilder.fromHttpUrl(BASE_URL)
                 .queryParam("login", LOGIN)
                 .queryParam("pass", PASSWORD)
