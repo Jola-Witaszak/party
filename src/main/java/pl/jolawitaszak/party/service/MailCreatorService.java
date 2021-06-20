@@ -37,6 +37,6 @@ public class MailCreatorService {
         context.setVariable("button", "Party Fun & Spontan");
         context.setVariable("app_url", "https://vast-peak-92879.herokuapp.com/");
 
-        return templateEngine.process("/mail/invitation-email", context);
+        return templateEngine.process("/templates/mail/invitation-email", context);
     }
 }
