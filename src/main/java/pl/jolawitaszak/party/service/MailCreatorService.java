@@ -34,9 +34,12 @@ public class MailCreatorService {
         context.setVariable("message", message);
         context.setVariable("welcome_message", adminConfig.getWelcomeMessage());
         context.setVariable("goodbye_message", adminConfig.getGoodbyeMessage());
-        context.setVariable("button", "Party Fun & Spontan");
-        context.setVariable("app_url", "https://vast-peak-92879.herokuapp.com/");
+        context.setVariable("button_party_app", "Party Fun & Spontan");
+        context.setVariable("button_yes", "I will come to the party! ");
+        context.setVariable("button_no", "Sorry, I won't come to the party. ");
+        context.setVariable("app_url", "http://localhost:8080/");
+        //context.setVariable("app_url", "https://vast-peak-92879.herokuapp.com/");
 
-        return templateEngine.process("/templates/mail/invitation-email.html", context);
+        return templateEngine.process("/mail/invitation-email", context);
     }
 }
