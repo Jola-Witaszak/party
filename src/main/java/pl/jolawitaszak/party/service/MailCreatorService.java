@@ -26,7 +26,7 @@ public class MailCreatorService {
         context.setVariable("welcome_message", adminConfig.getWelcomeMessage());
         context.setVariable("goodbye_message", adminConfig.getGoodbyeMessage());
 
-        return templateEngine.process("/mail/hello", context);
+        return templateEngine.process("/templates/mail/hello", context);
     }
 
     public String buildInvitationEmail(String message) {
@@ -37,6 +37,6 @@ public class MailCreatorService {
         context.setVariable("button", "Party Fun & Spontan");
         context.setVariable("app_url", "https://vast-peak-92879.herokuapp.com/");
 
-        return templateEngine.process("/mail/invitation-email", context);
+        return templateEngine.process("/templates/mail/invitation-email", context);
     }
 }
