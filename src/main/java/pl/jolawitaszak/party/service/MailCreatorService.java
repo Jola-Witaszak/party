@@ -42,6 +42,6 @@ public class MailCreatorService {
         //context.setVariable("app_url", "http://localhost:8080/");
         context.setVariable("app_url", "https://vast-peak-92879.herokuapp.com/");
 
-        return templateEngine.process("/mail/invitation-email.html", context);
+        return templateEngine.process("./mail/invitation-email.html", context);
     }
 }
