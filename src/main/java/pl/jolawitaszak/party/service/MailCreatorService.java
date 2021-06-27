@@ -1,6 +1,5 @@
 package pl.jolawitaszak.party.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -10,12 +9,15 @@ import pl.jolawitaszak.party.config.AdminConfig;
 @Service
 public class MailCreatorService {
 
-    @Autowired
     @Qualifier("templateEngine")
-    private TemplateEngine templateEngine;
+    private final TemplateEngine templateEngine;
 
-    @Autowired
-    private AdminConfig adminConfig;
+    private final AdminConfig adminConfig;
+
+    public MailCreatorService(TemplateEngine templateEngine, AdminConfig adminConfig) {
+        this.templateEngine = templateEngine;
+        this.adminConfig = adminConfig;
+    }
 
     public String buildWelcomeEmail(String message) {
         Context context = new Context();
@@ -36,7 +38,7 @@ public class MailCreatorService {
         context.setVariable("goodbye_message", adminConfig.getGoodbyeMessage());
         context.setVariable("button_party_app", "Party Fun & Spontan");
         context.setVariable("button_yes", "Yes I will ! ");
-        context.setVariable("button_no", "Not this time ");
+        context.setVariable("button_no", "Not this time... ");
         //context.setVariable("app_url", "http://localhost:8080/");
         context.setVariable("app_url", "https://vast-peak-92879.herokuapp.com/");
 
