@@ -9,6 +9,8 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import pl.jolawitaszak.party.domain.Mail;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class MailService {
@@ -38,9 +40,11 @@ public class MailService {
         return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setTo(mail.getMailTo());
-            messageHelper.setCc(mail.getMailToCc());
+            if (Optional.ofNullable(mail.getMailToCc()).isPresent()) {
+                 messageHelper.setCc(mail.getMailToCc());
+            }
             messageHelper.setSubject(mail.getSubject());
-            messageHelper.setText(mailCreatorService.buildWelcomeEmail(mail.getMessage()), true);
+            messageHelper.setText(mailCreatorService.buildInvitationEmail(mail.getMessage()), true);
         };
     }
 }

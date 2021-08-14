@@ -20,7 +20,7 @@
 <script th:inline="javascript">
   var map = tt.map({
     key: [[${apikey}]], // this will be replaced by Thymeleaf at runtime
-    container: 'map',
+    container: 'templates.tomtom.map',
     style: 'tomtom://vector/1/basic-main'
   });
   map.addControl(new tt.FullscreenControl());

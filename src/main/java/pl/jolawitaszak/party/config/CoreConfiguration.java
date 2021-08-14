@@ -2,6 +2,7 @@ package pl.jolawitaszak.party.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -10,6 +11,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
+@EnableScheduling
 @EnableSwagger2
 public class CoreConfiguration {
 
@@ -19,7 +21,7 @@ public class CoreConfiguration {
     }
 
     @Bean
-    public Docket api() { //http://localhost:8080/swagger-ui.html
+    public Docket api() { //http://localhost:8083/swagger-ui.html ; https://glacial-taiga-47785.herokuapp.com/swagger-ui.html
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("pl.jolawitaszak.party.controller"))

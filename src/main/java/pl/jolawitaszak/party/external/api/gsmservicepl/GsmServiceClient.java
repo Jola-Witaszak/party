@@ -13,23 +13,20 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class GsmServiceClient {
 
-    private static final String BASE_URL = "https://api.gsmservice.pl/v5/send.php";
-    private static final String LOGIN = "ja_witas13";
-    private static final String PASSWORD = "DRRT8QvBXbt8eQV";
-
+    private final GsmServiceConfig gsmServiceConfig;
     private final RestTemplate restTemplate;
-    private Sms sms;
+
 
     public SmsSendResponseDto send (Sms sms) {
 
-        URI url = getUri();
+        URI url = getUri(sms);
         return restTemplate.postForObject(url,null, SmsSendResponseDto.class);
     }
 
-    private URI getUri() {
-        return UriComponentsBuilder.fromHttpUrl(BASE_URL)
-                .queryParam("login", LOGIN)
-                .queryParam("pass", PASSWORD)
+    private URI getUri(Sms sms) {
+        return UriComponentsBuilder.fromHttpUrl(gsmServiceConfig.getBaseUrl())
+                .queryParam("login", gsmServiceConfig.getLogin())
+                .queryParam("pass", gsmServiceConfig.getPassword())
                 .queryParam("recipient", sms.getSmsTo())
                 .queryParam("message", sms.getMessage())
                 .queryParam("sender", sms.getSender())
