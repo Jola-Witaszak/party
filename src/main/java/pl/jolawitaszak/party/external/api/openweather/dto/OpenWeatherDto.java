@@ -1,10 +1,12 @@
-package pl.jolawitaszak.party.domain.openweather;
+package pl.jolawitaszak.party.external.api.openweather.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -21,6 +23,13 @@ public class OpenWeatherDto {
     @JsonProperty(value = "timezone")
     private String timeZone;
 
+    @JsonProperty(value = "timezone_offset")
+    private int timeZoneOffset;
+
     @JsonProperty(value = "current")
-    private Current current;
+    private CurrentDto current;
+
+    private List<DailyDto> daily;
+
+    private List<AlertDto> alerts;
 }

@@ -1,4 +1,4 @@
-package pl.jolawitaszak.party.domain.openweather;
+package pl.jolawitaszak.party.external.api.openweather.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Weather {
+public class WeatherDto {
 
     @JsonProperty(value = "id")
     private long id;
