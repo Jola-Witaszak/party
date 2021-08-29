@@ -1,4 +1,4 @@
-package pl.jolawitaszak.party.domain.openweather;
+package pl.jolawitaszak.party.external.api.openweather.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,25 +6,26 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Current {
+public class CurrentDto {
 
     @JsonProperty(value = "dt")
-    private int currentTime;
+    private Instant currentTime;
 
     @JsonProperty(value = "sunrise")
-    private int sunrise;
+    private Instant sunrise;
 
     @JsonProperty(value = "sunset")
-    private int sunset;
+    private Instant sunset;
 
     @JsonProperty(value = "temp")
-    private double temp;
+    private double temperature;
 
     @JsonProperty(value = "feels_like")
     private double feelsLike;
@@ -51,5 +52,5 @@ public class Current {
     private double windSpeed;
 
     @JsonProperty(value = "weather")
-    private List<Weather> weather;
+    private List<WeatherDto> weather;
 }
